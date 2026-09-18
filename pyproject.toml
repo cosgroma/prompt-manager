@@ -29,7 +29,7 @@ dependencies = [
 [project.optional-dependencies]
 # Thumbnails for videos in the gallery (an ffmpeg binary on PATH also works).
 video = [
-    "opencv-python-headless>=4.5.0",
+    "opencv-python-headless>=5.0.0.93",
 ]
 # AI auto-tagging models. Not needed for the core gallery/prompt features.
 autotag = [
