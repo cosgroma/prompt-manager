@@ -44,7 +44,7 @@ joycaption = [
     "accelerate>=0.26.0",
 ]
 dev = [
-    "pytest>=8.0.0",
+    "pytest>=9.1.1",
     "black>=24.0.0",
     "flake8>=7.0.0",
     "bandit[toml]>=1.7.0",
