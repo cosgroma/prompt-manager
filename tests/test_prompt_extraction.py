@@ -9,6 +9,7 @@ import json
 import os
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from PIL import Image
 from PIL.PngImagePlugin import PngInfo
@@ -133,6 +134,18 @@ class TestPromptTextFromImage(IngestTestCase):
 
     def test_image_without_metadata(self):
         self.assertIsNone(prompt_text_from_image(self.png("plain.png")))
+
+    def test_video_is_skipped_without_logging_an_error(self):
+        """Videos are served by the gallery but carry no readable prompt."""
+        path = os.path.join(self.tmp.name, "clip.MP4")
+        with open(path, "wb") as handle:
+            handle.write(b"\x00\x00\x00\x18ftypmp42")
+
+        with patch("promptmanager.ingest.prompt_extraction.logger") as log:
+            self.assertIsNone(prompt_text_from_image(path))
+            self.assertFalse(ingest_image(self.db, path).has_metadata)
+
+        log.error.assert_not_called()
 
     def test_unreadable_file(self):
         path = os.path.join(self.tmp.name, "broken.png")

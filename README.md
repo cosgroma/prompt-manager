@@ -1,8 +1,8 @@
 # PromptManager
 
-A standalone prompt library and image gallery for AI-generated images, backed by SQLite.
+A standalone prompt library and gallery for AI-generated images and videos, backed by SQLite.
 
-Point it at the folders your image generator writes to. PromptManager watches them, reads the prompt and workflow embedded in every image, and builds a searchable library of prompts linked to the images they produced — with tagging, ratings, AI auto-tagging, duplicate cleanup, and a metadata viewer. It runs as its own small web server; nothing needs to be installed into your image generator.
+Point it at the folders your image generator writes to. PromptManager watches them, reads the prompt and workflow embedded in every image, and builds a searchable library of prompts linked to the images they produced, alongside a gallery of all your images and videos — with tagging, ratings, AI auto-tagging, duplicate cleanup, and a metadata viewer. It runs as its own small web server; nothing needs to be installed into your image generator.
 
 ![Gallery](docs/images/pm-01.png)
 
@@ -12,7 +12,7 @@ Point it at the folders your image generator writes to. PromptManager watches th
 
 - **Metadata-driven library** – prompts are recovered from the metadata embedded in your images (ComfyUI `prompt`/`workflow` chunks and A1111-style `parameters`), deduplicated by hash, and linked to every image generated from them. Stock `CLIPTextEncode` workflows work; no custom nodes required.
 - **Live monitoring** – new images are picked up as they are written. Existing libraries are imported with a one-click bulk scan.
-- **Gallery** – browse images and videos across one or more output directories, with folder tree navigation, thumbnails, sorting, and a full-screen viewer.
+- **Gallery** – browse images and videos (`.mp4`, `.webm`, `.mov`, `.mkv`, `.avi`, `.m4v`, `.wmv`) across one or more output directories, with folder tree navigation, thumbnails, sorting, and a full-screen viewer.
 - **Search & organization** – full-text search, categories, tags, ratings, notes, folder filter, bulk operations, and export.
 - **Metadata viewer** – drop in any PNG to inspect prompts, sampler settings, models, and the full workflow JSON.
 - **AI AutoTag** *(optional)* – tag images with WD14 taggers or JoyCaption vision-language models.
@@ -32,6 +32,7 @@ pip install .
 Optional extras:
 
 ```bash
+pip install ".[video]"        # video thumbnails via OpenCV (or just have ffmpeg on PATH)
 pip install ".[autotag]"      # WD14 auto-tagging (ONNX)
 pip install ".[joycaption]"   # JoyCaption captioning (PyTorch, large)
 ```
@@ -89,6 +90,8 @@ PromptManager has no hook into the program generating your images, so the image 
 1. The positive prompt is extracted from the embedded metadata — following the sampler's `positive` connection in ComfyUI graphs, or the first line of an A1111 `parameters` block.
 2. The text is normalized and hashed. If a prompt with that hash exists, the image is linked to it; otherwise a new prompt is created in the `scanned` category with an `auto-scanned` tag.
 3. Images with no recoverable prompt are left unlinked. They still appear in the gallery, which lists files straight from disk.
+
+Videos are gallery-only: they are browsable and playable, but their metadata is not read, so they are not linked to prompts.
 
 The filesystem monitor and the bulk scan share this code path (`promptmanager.ingest.prompt_extraction`), so an image lands on the same prompt however it is discovered.
 

@@ -5,12 +5,12 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "promptmanager"
 version = "0.1.0"
-description = "A standalone prompt library and image gallery for AI-generated images, backed by SQLite."
+description = "A standalone prompt library and gallery for AI-generated images and videos, backed by SQLite."
 readme = "README.md"
 license = {file = "LICENSE"}
 requires-python = ">=3.10"
 authors = [{name = "Mathew Cosgrove"}]
-keywords = ["stable-diffusion", "comfyui", "prompts", "gallery", "metadata"]
+keywords = ["stable-diffusion", "comfyui", "prompts", "gallery", "metadata", "video"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "License :: OSI Approved :: MIT License",
@@ -27,6 +27,10 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+# Thumbnails for videos in the gallery (an ffmpeg binary on PATH also works).
+video = [
+    "opencv-python-headless>=4.5.0",
+]
 # AI auto-tagging models. Not needed for the core gallery/prompt features.
 autotag = [
     "huggingface-hub>=0.20.0",

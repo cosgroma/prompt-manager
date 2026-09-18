@@ -44,6 +44,10 @@ TEXT_ENCODER_TYPES = (
     "CLIP Text Encode",
 )
 
+# Media the gallery serves but whose metadata cannot be read with Pillow.
+# They are skipped quietly rather than logged as unreadable images.
+VIDEO_EXTENSIONS = (".mp4", ".webm", ".avi", ".mov", ".mkv", ".m4v", ".wmv")
+
 # Category and tag applied to prompts created from image metadata.
 SCANNED_CATEGORY = "scanned"
 SCANNED_TAGS = ("auto-scanned",)
@@ -75,8 +79,11 @@ def read_embedded_metadata(image_path: str) -> Dict[str, str]:
 
     Returns:
         Mapping of chunk name to raw string value; empty if the file has no
-        text chunks or cannot be read.
+        text chunks, is a video, or cannot be read.
     """
+    if str(image_path).lower().endswith(VIDEO_EXTENSIONS):
+        return {}
+
     try:
         with Image.open(image_path) as img:
             if hasattr(img, "text"):

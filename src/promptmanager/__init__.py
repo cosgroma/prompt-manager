@@ -1,4 +1,4 @@
-"""PromptManager: a standalone prompt library and gallery for AI-generated images.
+"""PromptManager: a standalone prompt library and gallery for AI-generated images and videos.
 
 Importing this package has no side effects. Use :func:`promptmanager.app.create_app`
 to build the web application, or run ``python -m promptmanager``.

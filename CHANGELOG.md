@@ -17,6 +17,8 @@ First release of PromptManager as a standalone application, hard-forked from
   `PROMPT_MANAGER_MODELS_DIR` and `PROMPT_MANAGER_COMFYUI_DIR` environment variables.
 - Changing gallery directories in Settings restarts the monitor without a server restart.
 - The monitor also picks up images finalized by rename.
+- `video` extra for OpenCV-based video thumbnails; the bulk scan skips videos quietly
+  instead of logging an error for each one.
 
 ### Changed
 - `src/` layout with a single `promptmanager` package; pip-installable, web assets
