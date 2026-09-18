@@ -41,7 +41,7 @@ autotag = [
 joycaption = [
     "torch>=2.0.0",
     "transformers>=4.40.0",
-    "accelerate>=0.26.0",
+    "accelerate>=1.15.0",
 ]
 dev = [
     "pytest>=8.0.0",
