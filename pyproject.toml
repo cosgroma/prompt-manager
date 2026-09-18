@@ -34,7 +34,7 @@ video = [
 # AI auto-tagging models. Not needed for the core gallery/prompt features.
 autotag = [
     "huggingface-hub>=0.20.0",
-    "numpy>=1.21.0",
+    "numpy>=2.2.6",
     "onnxruntime>=1.15.0",   # WD14 tagger; swap for onnxruntime-gpu for CUDA
 ]
 # JoyCaption vision-language captioning (large download).
