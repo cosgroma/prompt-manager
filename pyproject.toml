@@ -1,0 +1,78 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "promptmanager"
+version = "0.1.0"
+description = "A standalone prompt library and image gallery for AI-generated images, backed by SQLite."
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.10"
+authors = [{name = "Mathew Cosgrove"}]
+keywords = ["stable-diffusion", "comfyui", "prompts", "gallery", "metadata"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Graphics",
+]
+dependencies = [
+    "aiohttp>=3.9.0",    # Web server and REST API
+    "watchdog>=2.1.0",   # Filesystem monitoring for the image gallery
+    "Pillow>=8.0.0",     # PNG metadata extraction and thumbnails
+]
+
+[project.optional-dependencies]
+# AI auto-tagging models. Not needed for the core gallery/prompt features.
+autotag = [
+    "huggingface-hub>=0.20.0",
+    "numpy>=1.21.0",
+    "onnxruntime>=1.15.0",   # WD14 tagger; swap for onnxruntime-gpu for CUDA
+]
+# JoyCaption vision-language captioning (large download).
+joycaption = [
+    "torch>=2.0.0",
+    "transformers>=4.40.0",
+    "accelerate>=0.26.0",
+]
+dev = [
+    "pytest>=8.0.0",
+    "black>=24.0.0",
+    "flake8>=7.0.0",
+    "bandit[toml]>=1.7.0",
+    "pre-commit>=4.0.0",
+]
+
+[project.scripts]
+promptmanager = "promptmanager.cli:main"
+
+[project.urls]
+Repository = "https://github.com/cosgroma/prompt-manager"
+Issues = "https://github.com/cosgroma/prompt-manager/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+promptmanager = ["web/**/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.black]
+line-length = 88
+target-version = ["py310"]
+extend-exclude = "ComfyUI_PromptManager/"
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]
+exclude = [".git", "__pycache__", "src/promptmanager/web/", "venv/", "build/"]
+
+[tool.bandit]
+exclude_dirs = ["tests"]
