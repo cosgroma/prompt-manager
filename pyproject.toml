@@ -22,7 +22,7 @@ classifiers = [
 ]
 dependencies = [
     "aiohttp>=3.9.0",    # Web server and REST API
-    "watchdog>=2.1.0",   # Filesystem monitoring for the image gallery
+    "watchdog>=6.0.0",   # Filesystem monitoring for the image gallery
     "Pillow>=8.0.0",     # PNG metadata extraction and thumbnails
 ]
 
