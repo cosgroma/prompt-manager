@@ -35,7 +35,7 @@ video = [
 autotag = [
     "huggingface-hub>=0.20.0",
     "numpy>=1.21.0",
-    "onnxruntime>=1.15.0",   # WD14 tagger; swap for onnxruntime-gpu for CUDA
+    "onnxruntime>=1.24.3",   # WD14 tagger; swap for onnxruntime-gpu for CUDA
 ]
 # JoyCaption vision-language captioning (large download).
 joycaption = [
