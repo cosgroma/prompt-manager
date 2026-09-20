@@ -33,7 +33,7 @@ video = [
 ]
 # AI auto-tagging models. Not needed for the core gallery/prompt features.
 autotag = [
-    "huggingface-hub>=0.20.0",
+    "huggingface-hub>=1.32.0",
     "numpy>=1.21.0",
     "onnxruntime>=1.15.0",   # WD14 tagger; swap for onnxruntime-gpu for CUDA
 ]
